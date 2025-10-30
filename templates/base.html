@@ -13,9 +13,8 @@
 </head>
 <body>
   <nav>
-    <a href="{{ url_for('index') }}">Home</a>
-    <a href="{{ url_for('register') }}">Register</a>
-    <a href="{{ url_for('view_registrations') }}">View Registrations</a>
+    <a href="/">Home</a>
+    <a href="/register">Register</a>
   </nav>
   <hr>
   {% with messages = get_flashed_messages() %}
