@@ -21,8 +21,22 @@ def submit_form():
     name = request.form['name']
     country = request.form['country']
     age = request.form['age']
+    date = request.form['date']
 
-    # TODO: Save form data to a JSON file (worksheet Part 1)
+    # Check if file exists
+    if os.path.exists('registrations.json'):
+        with open('registrations.json', 'r') as file:
+            data = json.load(file)
+    else:
+        data = []
+
+    # Add the new registration
+    data.append({'name': name, 'country': country, 'age': age, 'date': date})
+
+    # Save all registrations back to the file
+    with open('registrations.json', 'w') as file:
+        json.dump(data, file, indent=2)
+
 
     flash('Registration submitted successfully!')
     return redirect(url_for('index'))
@@ -30,9 +44,10 @@ def submit_form():
 # Display stored registrations (students will add JSON reading code here)
 @app.route('/view')
 def view_registrations():
-    # TODO: Read data from registrations.json and send to template (worksheet Part 2)
+    with open('registrations.json', 'r') as file:
+        data = json.load(file)
+    return render_template('view.html', registrations=data)
 
-    return render_template('view.html', registrations=[])
 
 if __name__ == '__main__':
     app.run(debug=True)
